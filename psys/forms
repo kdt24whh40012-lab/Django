@@ -1,0 +1,9 @@
+from django import forms
+
+class CustomerSearchForm(forms.Form):
+    keyword = forms.CharField(
+        label="検索キーワード",
+        required=False,
+        max_length=50,
+        widget=forms.TextInput(attrs={'placeholder': '得意先名・電話番号・住所など', 'class': 'form-control'})
+    )

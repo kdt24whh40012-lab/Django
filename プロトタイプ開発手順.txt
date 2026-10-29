@@ -1,0 +1,7 @@
+1.URL("/CustomerSerch") GETで画面を表示(文字だけでもOK)
+2.URL("/CustomerSerch") GETでHTML(CustomerSearch.html)を表示
+3.URL("/CustomerSerch") POST→リダイレクトでURL("/CustomerSerch")を表示(PRGパターン)
+4.上記の流れに検索機能を加えていく
+5.入力制限(バリデーション)、該当する得意先がなかった場合など制限を追加
+
+*psys/views.py　CustomerSearch()メソッド

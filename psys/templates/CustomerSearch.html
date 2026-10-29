@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>得意先検索画面</title>
+    <style>
+        .header-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+        .search-area { background: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #ddd; margin-bottom: 20px; }
+        .search-row { display: flex; gap: 15px; margin-bottom: 10px; }
+        .form-group { display: flex; flex-direction: column; flex: 1; }
+        .form-group label { font-size: 0.9em; font-weight: bold; margin-bottom: 5px; }
+        .form-group input { padding: 6px; font-size: 0.95em; }
+        .btn-submit { padding: 8px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; align-self: flex-end; }
+        .btn-submit:hover { background-color: #0056b3; }
+        .error-message { color: red; font-weight: bold; margin: 10px 0; }
+        table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="header-bar">
+        <h1>得意先検索</h1>
+        <div>
+            ログインユーザー: <strong>{{ employee_name }}</strong> さん
+            | <a href="{% url 'psys:Logout' %}">ログアウト</a>
+        </div>
+    </div>
+    <!-- 検索フォーム (PRGパターン用) -->
+    <div class="search-area">
+        <form method="POST" action="{% url 'psys:CustomerSearch' %}">
+            {% csrf_token %}
+            <div class="search-row">
+                <div class="form-group">
+                    <label for="search_name">得意先名</label>
+                    <input type="text" id="search_name" name="search_name" value="{{ search_name }}" placeholder="例: A店社">
+                </div>
+                <div class="form-group">
+                    <label for="search_tel">電話番号</label>
+                    <input type="text" id="search_tel" name="search_tel" value="{{ search_tel }}" placeholder="例: 06-128">
+                </div>
+                <div class="form-group">
+                    <label for="search_address">住所</label>
+                    <input type="text" id="search_address" name="search_address" value="{{ search_address }}" placeholder="例: 大阪市北区">
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">この条件で検索</button>
+        </form>
+    </div>
+
+    <!-- エラー・バリデーションメッセージ表示 -->
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    <!-- 検索結果一覧表示 -->
+    {% if customers %}
+        <p>検索結果: {{ customers.count }} 件</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>得意先コード</th>
+                    <th>得意先名</th>
+                    <th>電話番号</th>
+                    <th>郵便番号</th>
+                    <th>住所</th>
+                    <th>割引率</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_code }}</td>
+                    <td>{{ customer.customer_name }}</td>
+                    <td>{{ customer.customer_telno }}</td>
+                    <td>{{ customer.customer_postalcode }}</td>
+                    <td>{{ customer.customer_address }}</td>
+                    <td>{{ customer.discount_rate }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+# MySQL手順
+
+## sqlファイルを読ませる
+MySQLにログインした後、
+```
+source [psysdb.sqlのファイルパス]
+```
+
+確認
+```
+use psysdb3
+show tables;
+```
+
+## MySQL Userの登録
+MySQLのユーザー確認
+```
+SELECT  host, user FROM mysql.user;
+```
+
+## MySQL Userの登録
+```
+CREATE USER 'user_name'@'localhost' IDENTIFIED BY 'your_password;
+```
+
+## MySQL Userに権限を付与する
+``
+GRANT ALL ON psysdb3.* to 'user_name'@'localhost';
+```
+
+## 確認
+```
+> exit;
+
+mysql -u user_name -p
+
+> show databases;
+```

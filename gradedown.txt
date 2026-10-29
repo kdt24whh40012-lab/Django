@@ -1,0 +1,21 @@
+pip freeze > requirements.txt
+
+モジュールを削除
+pip uninstall -y -r requirements.txt
+
+モジュールを再インストール
+pip install Django==4.2.2
+pip install mysqlclient
+
+動作確認
+python manage.py runserver
+python manage.py dbshell
+
+psys/models.pyを生成
+python manage.py inspectdb > psys/models.py
+
+Djnagoだけを5.2(LTS)に上げる
+pip install django==5.2
+
+requirements.txtを更新
+pip freeze > requirements.txt
